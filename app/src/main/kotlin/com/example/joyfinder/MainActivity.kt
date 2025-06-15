@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import android.content.Intent
 import android.net.Uri
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -19,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.joyfinder.ui.LogViewModel
 import com.example.joyfinder.util.ShareUtils
+
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,7 +41,6 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
     val formatter = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
     val context = LocalContext.current
     val clipboard = LocalClipboardManager.current
-
     MaterialTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -96,6 +97,7 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
                 averages.forEach { (act, avg) ->
                     Text(text = "$act: ${"%.1f".format(avg)}")
                 }
+
             }
         }
     }
