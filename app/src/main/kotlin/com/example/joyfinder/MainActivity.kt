@@ -5,7 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import android.content.Intent
 import android.net.Uri
-
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.joyfinder.ui.LogViewModel
 import com.example.joyfinder.util.ShareUtils
-
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -41,6 +39,8 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
     val formatter = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
     val context = LocalContext.current
     val clipboard = LocalClipboardManager.current
+    var offlineAnalysis by remember { mutableStateOf("") }
+
     MaterialTheme {
         Surface(modifier = Modifier.fillMaxSize()) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -81,7 +81,14 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://gemini.google.com"))
                         context.startActivity(intent)
                     }) {
-                        Text("Analyze")
+                        Text("Analyze Online")
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        offlineAnalysis = viewModel.offlineAnalysis(averages)
+                    }) {
+                        Text("Analyze Offline")
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -96,8 +103,10 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 averages.forEach { (act, avg) ->
                     Text(text = "$act: ${"%.1f".format(avg)}")
+                }                if (offlineAnalysis.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(text = offlineAnalysis)
                 }
-
             }
         }
     }

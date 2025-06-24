@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.joyfinder.data.AppDatabase
 import com.example.joyfinder.data.LogRepository
+import com.example.joyfinder.util.OfflineAnalyzer
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
@@ -36,4 +37,8 @@ class LogViewModel(application: Application) : AndroidViewModel(application) {
         }
         return "Here are my recent activities and average joy scores:\n$summary\nPlease analyze my patterns and give suggestions."
     }
+    fun offlineAnalysis(averages: Map<String, Double>): String {
+        return OfflineAnalyzer.analyze(averages)
+    }
+
 }
