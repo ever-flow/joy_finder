@@ -103,8 +103,7 @@ fun JoyFinderApp(viewModel: LogViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(16.dp))
                 averages.forEach { (act, avg) ->
                     Text(text = "$act: ${"%.1f".format(avg)}")
-                }
-                if (offlineAnalysis.isNotBlank()) {
+                }                if (offlineAnalysis.isNotBlank()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = offlineAnalysis)
                 }
