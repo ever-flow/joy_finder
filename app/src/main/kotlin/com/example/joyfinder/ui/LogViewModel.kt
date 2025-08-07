@@ -39,8 +39,8 @@ class LogViewModel(application: Application) : AndroidViewModel(application) {
         }
         return "Here are my recent activities and average joy scores:\n$summary\nPlease analyze my patterns and give suggestions."
     }
-
     fun offlineAnalysis(averages: Map<String, Double>): String {
         return OfflineAnalyzer.analyze(averages)
     }
+
 }
