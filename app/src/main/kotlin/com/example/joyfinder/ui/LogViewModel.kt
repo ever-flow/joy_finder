@@ -17,6 +17,7 @@ class LogViewModel(application: Application) : AndroidViewModel(application) {
 
     val logs: StateFlow<List<com.example.joyfinder.data.ActivityLog>> =
         repo.getLogs().stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
     val activityAverages: StateFlow<Map<String, Double>> =
         repo.getLogs().map { entries ->
             entries.groupBy { it.activity }
@@ -30,6 +31,7 @@ class LogViewModel(application: Application) : AndroidViewModel(application) {
             repo.addLog(activity, joyScore)
         }
     }
+
     fun generatePrompt(averages: Map<String, Double>): String {
         if (averages.isEmpty()) return "No logs yet.";
         val summary = averages.entries.joinToString("\n") { (act, avg) ->
